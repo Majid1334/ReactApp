@@ -1,0 +1,411 @@
+﻿@import "../node_modules/@syncfusion/ej2-react-diagrams/styles/material.css";
+@import "../node_modules/@syncfusion/ej2-base/styles/material.css";
+@import "../node_modules/@syncfusion/ej2-popups/styles/material.css";
+@import "../node_modules/@syncfusion/ej2-splitbuttons/styles/material.css";
+@import "../node_modules/@syncfusion/ej2-navigations/styles/material.css";
+@import "../node_modules/@syncfusion/ej2-base/styles/bootstrap5.css";
+@import "../node_modules/@syncfusion/ej2-react-layouts/styles/bootstrap5.css";
+@import "../node_modules/@syncfusion/ej2/bootstrap5.css";
+@import "../node_modules/bootstrap-icons/font/bootstrap-icons.css";
+@import "../node_modules/@syncfusion/ej2-react-documenteditor/styles/material.css";
+@import "../node_modules/@syncfusion/ej2-layouts/styles/material.css";
+@import "../node_modules/@syncfusion/ej2-base/styles/material.css";
+@import "../node_modules/@syncfusion/ej2-react-layouts/styles/material.css";
+@import "../node_modules/@syncfusion/ej2-base/styles/material.css";
+@import "../node_modules/@syncfusion/ej2-react-navigations/styles/material.css";
+@import "../node_modules/@syncfusion/ej2-inputs/styles/material.css"; /* If using inputs within TreeView */
+@import "../node_modules/@syncfusion/ej2-buttons/styles/material.css"; /* If using buttons within TreeView */
+@import "../node_modules/@syncfusion/ej2-icons/styles/bootstrap5.css";
+#root {
+  max-width: 1280px;
+  margin: 0 auto;
+  padding: 2rem;
+  text-align: center;
+}
+
+body {
+  margin: 0;
+  font-family: Arial, sans-serif;
+}
+
+.nav {
+  background: #2a4d69;
+}
+
+.nav-pills .nav-item {
+  display: flex;
+  align-items: center;
+  white-space: nowrap;
+}
+
+.nav-pills .nav-item a {
+  color: white;
+  text-decoration: none;
+}
+
+.sidebarContainer {
+  position: fixed;
+  top: 39px;
+  left: 0;
+  height: calc(100vh - 50px);
+  width: 50px;
+  background-color: #2a4d69;
+  transition: width 0.3s;
+  z-index: 999;
+}
+
+.e-dashboardlayout.e-control {
+  display: block;
+  position: relative;
+  left: 80px;
+}
+
+.sticky-top {
+  position: absolute;
+  margin-top: 7px;
+  z-index: 1020;
+  left: 45%;
+  transform: translateX(-45%);
+  background: #2a4d69;
+}
+
+@media (min-width: 576px) {
+  .flex-sm-column {
+    width: 50px;
+  }
+}
+
+@media (min-width: 1200px) {
+  .fs-1 {
+    font-size: 1.5rem !important;
+  }
+}
+
+.bi::before,
+[class^="bi-"]::before,
+[class*=" bi-"]::before {
+  font-size: 20px;
+  color: white;
+}
+
+.nav-text {
+  font-family: "Roboto", sans-serif;
+  font-size: 12px;
+  color: white;
+  margin-left: 0px;
+  display: inline-block !important;
+  width: 75px;
+}
+
+Top bar .fixed-top {
+  background: #2a4d69;
+  height: 50px;
+}
+
+#DeletePanel {
+  font-size: 20px;
+  color: #110f0f;
+}
+
+#ForwardBackward {
+  position: absolute;
+  bottom: 10px;
+  right: 20px;
+  font-size: 40px;
+  color: #ffffff;
+}
+
+.e-de-toolbar.e-toolbar .e-toolbar-items .e-toolbar-item .e-tbar-btn.e-btn {
+  flex-direction: unset;
+  vertical-align: bottom;
+}
+
+.e-richtexteditor .e-rte-content .e-content {
+  padding: 0px;
+}
+
+.e-de-toolbar.e-toolbar .e-toolbar-items {
+  height: 40px !important;
+  top: 0px;
+  align-items: center;
+  vertical-align: middle;
+}
+
+.e-de-tool-ctnr-properties-pane {
+  display: -ms-flexbox;
+  display: flex;
+  height: calc(100% - 75px);
+  width: 100%;
+}
+
+.e-de-ctnr-toolbar {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  height: 40px;
+  width: 100%;
+}
+
+.bi-x-square::before {
+  content: "\f629";
+  color: rgb(116, 114, 114);
+}
+
+.bi-diagram-2::before {
+  content: "\f2ec";
+  color: rgb(116, 114, 114);
+}
+
+#predefine_dashboard {
+  position: absolute;
+  margin-left: -11px;
+  z-index: 99;
+}
+.e-dashboardlayout.e-control .e-panel .e-panel-container .e-panel-header {
+  color: #754131;
+  background-color: #c9e2f7;
+  text-align: center;
+}
+
+.container,
+.container-fluid,
+.container-xxl,
+.container-xl,
+.container-lg,
+.container-md,
+.container-sm {
+  --bs-gutter-x: 1.5rem;
+  --bs-gutter-y: 0;
+  width: 100%;
+  padding-right: calc(var(--bs-gutter-x) * 0.5);
+  padding-left: calc(var(--bs-gutter-x) * 0.5);
+  margin-right: auto;
+  margin-left: auto;
+}
+#symbolpalette {
+  height: 100%;
+  position: absolute;
+  top: 0;
+  left: 0;
+}
+
+#diagram {
+  border: 1px solid #754131;
+  background-color: #f3f3f3;
+  left: 0;
+}
+.e-treeview .e-text-content {
+  -ms-user-select: none;
+  -webkit-user-select: none;
+  user-select: none;
+  border: 1px solid;
+  cursor: pointer;
+  margin: 0;
+  padding: 0 0 0 20px;
+  padding-top: 4px;
+  padding-left: 10px;
+  border: #7c7c94 1px solid;
+  cursor: default;
+  text-align: left;
+}
+.e-treeview .e-list-item {
+  border: none;
+  margin: 0;
+  padding: 0;
+  text-align: left;
+  list-style-type: none;
+}
+/* For custom image-based icons */
+.e-pdf-icon {
+  background-image: url("path/to/pdf-icon.png");
+  background-repeat: no-repeat;
+  background-size: contain;
+  width: 16px; /* Adjust as needed */
+  height: 16px; /* Adjust as needed */
+  display: inline-block;
+  margin-right: 5px;
+}
+.treeview-node-content {
+  display: flex;
+  align-items: center;
+}
+
+.node-icon {
+  margin-right: 8px; /* Adjust spacing as needed */
+  font-size: 16px; /* Adjust icon size */
+  color: #7e3c3c; /* Adjust icon color */
+}
+/* svg {
+  stroke: currentcolor;
+  fill: yellow;
+  stroke-width: 0;
+  height: 1em;
+  width: 1em;
+} */
+.e-treeview.e-js {
+  overflow: visible;
+}
+#treeview {
+  text-align: left;
+  width: 95%;
+  height: 90%;
+  margin: 20px;
+  overflow: scroll;
+}
+.e-treeview > .e-ul {
+  overflow: hidden;
+}
+
+.e-dialog.e-diagram-modal {
+  background-color: #f0f0f0;
+  border: 1px solid #160a31;
+  /* Add other custom styles here */
+}
+
+#toolbar_diagram {
+  font-size: 12px;
+  margin-right: 0px;
+  width: 100%;
+  height: 10%;
+  margin-top: 0px;
+  fill: white;
+}
+
+#toolbar_diagram.e-toolbar {
+  box-shadow: 3px 0 0 1px rgba(33, 33, 34, 0.14) !important;
+  outline: none;
+  border-radius: 4px;
+  border: 0px solid black;
+}
+#toolbar_diagram.e-toolbar .e-tbar-btn:focus .e-icons {
+  color: #eb8448;
+}
+#toolbar_diagram.e-toolbar .e-tbar-btn:focus {
+  background-color: initial;
+  box-shadow: 0 0 0 0px rgba(44, 46, 53, 0.14);
+}
+#toolbar_diagram.e-toolbar .e-tbar-btn {
+  font-weight: normal;
+}
+#toolbar_diagram.e-toolbar .e-tbar-btn:hover {
+  background-color: #add8e6;
+  border: 0px solid #add8e6;
+}
+#exportDropdownbtn_diagram {
+  font-weight: normal;
+}
+#exportDropdownbtn_diagram:hover {
+  background-color: #add8e6;
+}
+#exportDropdownbtn_diagram:focus .e-icons {
+  color: #eb8448;
+}
+#exportDropdownbtn_diagram:focus {
+  background-color: initial;
+  box-shadow: 0 0 0 0px rgba(44, 46, 53, 0.14);
+}
+#loadDropdownbtn_diagram {
+  font-weight: normal;
+}
+#loadDropdownbtn_diagram:hover {
+  background-color: #add8e6;
+}
+#loadDropdownbtn_diagram:focus .e-icons {
+  color: #eb8448;
+}
+#loadDropdownbtn_diagram:focus {
+  background-color: initial;
+  box-shadow: 0 0 0 0px rgba(44, 46, 53, 0.14);
+}
+
+.e-toolbar,
+.e-toolbar-items {
+  background-color: rgb(250, 248, 248) !important;
+  height: 20px !important;
+}
+#readonlyProcessDiagram {
+  position: absolute;
+  top: 0px;
+  left: 0px;
+  width: 100%;
+}
+#moveable-symbol-palette {
+  background-color: #f0f0f0;
+  border: 1px solid #754131;
+  box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.3);
+  border-radius: 4px;
+  width: 200px;
+  z-index: 1000;
+}
+.palette-header {
+  color: Red;
+  padding: 8px;
+  cursor: move;
+  width: 220px;
+  height: 115x;
+  border-bottom: 0px solid #ccc;
+  border-top-left-radius: 4px;
+  border-top-right-radius: 4px;
+}
+.vertical-text {
+  writing-mode: vertical-rl; /* or vertical-lr */
+  text-orientation: upright; /* or mixed */
+}
+.e-treeview .e-list-item.e-active > .e-text-content {
+  background-color: #dbe5eb;
+  border-radius: 4px; /* Optional: adds rounded corners */
+  padding: 0 10px; /* Optional: adjusts horizontal spacing */
+}
+
+#SelectProcessesID {
+  background-color: #e5ebee; /* Green background color */
+  color: black; /* White text color for contrast */
+  padding: 8px 16px; /* Add some padding */
+  border: 1px solid #ddd; /* Add a border */
+}
+.palette-content {
+  width: 250px;
+  height: 500px;
+  resize: vertical;
+}
+.control-pane .dialog-target {
+  min-height: 350px;
+}
+.modal-header {
+  z-index: 99999;
+}
+#ID {
+  width: 50px;
+  max-width: 50px; /* Adjust as needed */
+}
+
+#ProcessName {
+  width: 300px;
+  max-width: 300px; /* Adjust as needed */
+}
+
+#ParentName {
+  width: 300px;
+  max-width: 300px; /* Adjust as needed */
+}
+
+#LastModifiedDate {
+  width: 300px;
+  max-width: 300px; /* Adjust as needed */
+}
+
+#Description {
+  width: 750px;
+  max-width: 750px; /* Adjust as needed */
+}
+
+#Status {
+  width: 200px;
+  max-width: 300px; /* Adjust as needed */
+}
+.modal-header {
+  background-color: #9097ad; /* Replace with your desired color */
+}
+.form-control {
+  font-weight: 800; /* You can use a numeric value or 'bold', 'normal', etc. */
+}
