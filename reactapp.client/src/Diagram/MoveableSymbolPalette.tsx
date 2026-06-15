@@ -7,6 +7,8 @@ import {
   UndoRedo,
   DiagramContextMenu,
   NodeConstraints,
+  type PointPortModel,
+  PortVisibility,
 } from "@syncfusion/ej2-react-diagrams";
 import Draggable from "react-draggable";
 import { BPMNsymbols } from "./bpmnShapes";
@@ -16,6 +18,43 @@ const MoveableSymbolPalette: React.FC = React.memo(() => {
   const [divPosition, setDivPosition] = useState({ top: 50, left: 10 });
   const symbolPaletteRef = React.useRef<any>(null);
   const MAX_HEIGHT = 500;
+  const ports: PointPortModel[] = [
+    // Top and Bottom
+    {
+      id: "topPort",
+      offset: { x: 0.5, y: 0 },
+      visibility: PortVisibility.Connect,
+    },
+    {
+      id: "bottomPort",
+      offset: { x: 0.5, y: 1 },
+      visibility: PortVisibility.Connect,
+    },
+
+    // Left (Top and Bottom)
+    {
+      id: "leftTopPort",
+      offset: { x: 0, y: 0.3 },
+      visibility: PortVisibility.Connect,
+    },
+    {
+      id: "leftBottomPort",
+      offset: { x: 0, y: 0.7 },
+      visibility: PortVisibility.Connect,
+    },
+
+    // Right (Top and Bottom)
+    {
+      id: "rightTopPort",
+      offset: { x: 1, y: 0.3 },
+      visibility: PortVisibility.Connect,
+    },
+    {
+      id: "rightBottomPort",
+      offset: { x: 1, y: 0.7 },
+      visibility: PortVisibility.Connect,
+    },
+  ];
   const adjustPaletteHeight = () => {
     const comp = symbolPaletteRef.current;
     if (!comp || !comp.element) return;
@@ -42,7 +81,9 @@ const MoveableSymbolPalette: React.FC = React.memo(() => {
       node.constraints =
         node.constraints &
         ~(NodeConstraints.InConnect | NodeConstraints.OutConnect);
+      node.ports = ports;
     }
+
     return node;
   }
   function getConnectorDefaults(connector: any) {

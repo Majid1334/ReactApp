@@ -34,6 +34,7 @@ import {
   type FileFormats,
   type IExportOptions,
   type NodeModel,
+  type ConnectorModel,
   type DiagramEventDropObject,
 } from "@syncfusion/ej2-react-diagrams";
 
@@ -63,6 +64,9 @@ import ConfirmationModal from "../IncomingModels/ConfirmationModel";
 import DemoteProcess from "../InlineFunctions/DemoteProcess";
 import RefSubProcesses from "../InlineFunctions/RefSubProcess";
 import NodeDetailInfo from "../InlineFunctions/NodeDetailInfo";
+import type { AiModelForProcessDiagram } from "../OutgoingModels/AiModelForProcessDiagram";
+import { mapBpmnToSyncfusion } from "./mapBpmnToSyncfusion";
+import { bpmnData } from "./bpmndata";
 Dexie.debug = false;
 
 interface deleteAndPromoteSubProcess {
@@ -118,7 +122,7 @@ export function ProcessDiagram(props: ProcessDiagramProps) {
   const [showPromotionModal, setShowPromotionModal] = useState(false);
   const [showDemotionModal, setShowDemotionModal] = useState(false);
   const [showReferenceModal, setShowReferenceModal] = useState(false);
-
+  const [aiText, setAiText] = useState<string>("");
   const deleteAndPromoteSubProcess = useRef<deleteAndPromoteSubProcess>({
     Promote: 0,
     ProcessID: 0,
@@ -157,7 +161,10 @@ export function ProcessDiagram(props: ProcessDiagramProps) {
     { text: "Memory" },
     { text: "Local" },
     { text: "Database" },
+    { text: "Nodes" },
   ];
+  const [nodes, setNodes] = useState<NodeModel[]>([]);
+  const [connectors, setConnectors] = useState<ConnectorModel[]>([]);
 
   const SaveDiagramInMemory = () => {
     setDiagramInMemory(diagramRef.current?.saveDiagram() ?? null);
@@ -225,6 +232,49 @@ export function ProcessDiagram(props: ProcessDiagramProps) {
       URL.revokeObjectURL(url);
     }
   };
+  const saveDiagramNode = () => {
+    const diagramData = diagramRef.current?.nodes;
+    if (diagramData) {
+      const blob = new Blob([JSON.stringify(diagramData)], {
+        type: "application/json",
+      });
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement("a");
+      a.href = url;
+      a.download = "diagram.json";
+      document.body.appendChild(a);
+      a.click();
+      document.body.removeChild(a);
+      URL.revokeObjectURL(url);
+    }
+  };
+
+  const handleChange = (event: ChangeEvent<HTMLInputElement>) => {
+    setAiText(event.target.value);
+  };
+  const handleKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
+    if (e.key === "Enter") {
+      const Params: AiModelForProcessDiagram = {
+        ProcessName: aiText,
+      };
+      GetAiDiagram(Params);
+      console.log("Enter key pressed! Current value:", aiText);
+      // Execute your search or submission logic here
+    }
+  };
+  const renderAIProcessInput = () => (
+    <input
+      id="AIinput"
+      type="text"
+      value={aiText}
+      style={{ width: "300px" }}
+      // onMouseLeave={callAI}
+      // onBlur={handleBlur}
+      onKeyDown={handleKeyDown}
+      onChange={handleChange}
+      placeholder="AI - Type name of the process..."
+    />
+  );
   const renderMultiPageCheckbox = () => (
     <CheckBoxComponent
       id="checkBox1"
@@ -288,6 +338,9 @@ export function ProcessDiagram(props: ProcessDiagramProps) {
               .toString() ?? "",
         };
         UpdateDiagram(Params);
+        break;
+      case "Nodes":
+        saveDiagramNode();
         break;
     }
   };
@@ -358,6 +411,39 @@ export function ProcessDiagram(props: ProcessDiagramProps) {
     }
     return false;
   }
+
+  const GetAiDiagram = useCallback((Params: AiModelForProcessDiagram) => {
+    // const { nodes, connectors } = mapBpmnToSyncfusion(bpmnData);
+    // setNodes(nodes);
+    // setConnectors(connectors);
+    // const node = JSON.parse(JSON.stringify(nodes));
+    // const connector = JSON.parse(JSON.stringify(connectors));
+    // if (diagramRef.current) {
+    //   diagramRef.current.nodes = node;
+    //   diagramRef.current.connectors = connector;
+    // }
+    const ApiPath = "/Ai/GetProcessDiagram";
+    const paramsInString = JSON.stringify(Params);
+    const paramsInJSON = JSON.parse(paramsInString);
+    callAPI(ApiPath, paramsInJSON)
+      .then((response) => {
+        const { nodes, connectors } = mapBpmnToSyncfusion(response);
+        setNodes(nodes);
+        setConnectors(connectors);
+        const node = JSON.parse(JSON.stringify(nodes));
+        const connector = JSON.parse(JSON.stringify(connectors));
+        if (diagramRef.current) {
+          diagramRef.current.nodes = node;
+          diagramRef.current.connectors = connector;
+        }
+        if (response === false || response === null || response.length === 0) {
+          alert("Unsuccessful attempt of using AI for " + Params.ProcessName);
+        }
+      })
+      .catch(() => {
+        console.error("Unsuccessful attempt of using AI for " + Params);
+      });
+  }, []);
 
   const UpdateDiagram = useCallback((Params: UpdDiagramModel) => {
     const ApiPath = "/Diagram/UpdtDiagram";
@@ -1084,7 +1170,7 @@ export function ProcessDiagram(props: ProcessDiagramProps) {
         style={{ display: "none" }}
         accept=".json"
       />
-      <div id="ProcessDiagramPnl" style={{ display: "flex", height: "500px" }}>
+      <div id="ProcessDiagramPnl" style={{ display: "flex", height: "800px" }}>
         <div id="diagramContainerDiv" style={{ flex: 1 }}>
           <ToolbarComponent id="toolbar_diagram" clicked={handleToolbarClick}>
             <ItemsDirective>
@@ -1109,6 +1195,11 @@ export function ProcessDiagram(props: ProcessDiagramProps) {
                 prefixIcon="e-diagram-icons e-diagram-print e-icons e-medium e-print"
               />
               <ItemDirective type="Input" template={renderMultiPageCheckbox} />
+              <ItemDirective
+                type="Input"
+                text="AI"
+                template={renderAIProcessInput}
+              />
             </ItemsDirective>
           </ToolbarComponent>
           <DiagramComponent
@@ -1133,8 +1224,8 @@ export function ProcessDiagram(props: ProcessDiagramProps) {
             key={KeyForDiagram}
             onUserHandleMouseDown={handleUserHandleMouseDown}
             onUserHandleMouseEnter={onUserHandleMouseEnter}
-            getNodeDefaults={getNodeDefaults}
-            getConnectorDefaults={getConnectorDefaults}
+            //getNodeDefaults={getNodeDefaults}
+            //getConnectorDefaults={getConnectorDefaults}
           >
             <Inject
               services={[

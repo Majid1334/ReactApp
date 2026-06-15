@@ -4,7 +4,7 @@ import { type PaletteModel } from "@syncfusion/ej2-react-diagrams";
 export const BPMNsymbols: PaletteModel[] = [
   {
     id: "flow",
-    expanded: true,
+    expanded: false,
     title: "Flow Shapes",
     symbols: [
       {
@@ -53,7 +53,7 @@ export const BPMNsymbols: PaletteModel[] = [
   },
   {
     id: "swimlaneShapes",
-    expanded: true,
+    expanded: false,
     title: "Swimlane Shapes",
     symbols: [
       {

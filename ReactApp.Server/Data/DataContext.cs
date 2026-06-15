@@ -9,7 +9,7 @@ namespace ReactApp.Server.Data
         private readonly string connectionId = "TestDB";
         private readonly IConfiguration _config = config;
 
-    public string GetConnectionString()
+        public string GetConnectionString()
         {
             string? constr = _config.GetSection("ConnectionStrings")[connectionId];
             if (constr != null)

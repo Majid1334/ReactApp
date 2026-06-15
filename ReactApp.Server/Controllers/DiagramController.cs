@@ -16,6 +16,7 @@ namespace ReactApp.Server.Controllers
         }
 
         [HttpPost]
+        [ActionName("UpdateProcessesDetails")]
         public async Task<IActionResult> UpdateProcessesDetails([FromBody] UpdProcessModel reqModel)
         {
             var Diagram = new ReactApp.Server.Queries.DiagramCURD(_context);
@@ -24,6 +25,7 @@ namespace ReactApp.Server.Controllers
         }
 
         [HttpPost]
+        [ActionName("GetProcessesDetails")]
         public async Task<IActionResult> GetProcessesDetails([FromBody] ProcessIDModel reqModel)
         {
             var Diagram = new ReactApp.Server.Queries.DiagramCURD(_context);
@@ -113,7 +115,7 @@ namespace ReactApp.Server.Controllers
             var result = await Diagram.GetProcessTree(reqModel);
             return Ok(result);
         }
-                [HttpPost]
+        [HttpPost]
         [ActionName("GetMyProcesses")]
         public async Task<IActionResult> GetMyProcesses([FromBody] ProcessWithExclusionModel reqModel)
         {

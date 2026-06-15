@@ -345,7 +345,7 @@ const ProcessDetailForm = (props: ModalpropsType) => {
               {props.PathDesc.replaceAll("gtgt", ">")}
             </Modal.Title>
           </Modal.Header>
-          <Modal.Body style={{ minHeight: "500px", overflow: "auto" }}>
+          <Modal.Body style={{ minHeight: "800px", overflow: "auto" }}>
             <ProcessDiagram
               ProcessID={props.ProcessID}
               PathDesc={props.PathDesc}
