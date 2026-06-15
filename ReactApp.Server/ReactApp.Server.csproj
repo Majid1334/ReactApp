@@ -7,16 +7,22 @@
     <SpaRoot>..\reactapp.client</SpaRoot>
     <SpaProxyLaunchCommand>npm run dev</SpaProxyLaunchCommand>
     <SpaProxyServerUrl>https://localhost:60415</SpaProxyServerUrl>
+    <UserSecretsId>f913dbda-61cf-41ca-8b35-3a923b3b82e6</UserSecretsId>
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="Dapper" Version="2.1.66" />
+    <PackageReference Include="Azure.AI.OpenAI" Version="2.1.0" />
+    <PackageReference Include="Dapper" Version="2.1.79" />
     <PackageReference Include="Microsoft.AspNetCore.SpaProxy">
-      <Version>8.*-*</Version>
+      <Version>10.0.8</Version>
     </PackageReference>
-    <PackageReference Include="Microsoft.Data.SqlClient" Version="6.1.1" />
+    <PackageReference Include="Microsoft.Data.SqlClient" Version="7.0.1" />
     <PackageReference Include="Microsoft.EntityFrameworkCore" Version="9.0.8" />
-    <PackageReference Include="Swashbuckle.AspNetCore" Version="6.6.2" />
+    <PackageReference Include="Microsoft.Extensions.AI" Version="10.6.0" />
+    <PackageReference Include="Microsoft.Extensions.Configuration" Version="10.0.8" />
+    <PackageReference Include="Microsoft.Extensions.Configuration.UserSecrets" Version="10.0.8" />
+    <PackageReference Include="OpenAI" Version="2.10.0" />
+    <PackageReference Include="Swashbuckle.AspNetCore" Version="10.2.1" />
   </ItemGroup>
 
   <ItemGroup>
