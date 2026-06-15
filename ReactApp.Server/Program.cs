@@ -1,6 +1,24 @@
 using ReactApp.Server.Data;
 
+HostApplicationBuilder hostbuilder = Host.CreateApplicationBuilder(args);
+IConfiguration config = new ConfigurationBuilder()
+                .AddUserSecrets<Program>()
+                .Build();
+string? aiKey = config["SecretKeys:AI_KEY"];
+string? aiURI = config["secretKeys:AI_URI"];
+if (string.IsNullOrEmpty(aiKey))
+{
+    aiKey="";
+}
+if (string.IsNullOrEmpty(aiURI))
+{
+    aiURI = "";
+}
+ 
 var builder = WebApplication.CreateBuilder(args);
+
+builder.Services.AddKeyedSingleton<string>("AiKey", aiKey);
+builder.Services.AddKeyedSingleton<string>("AiURI", aiURI);
 
 // Add services to the container.
 
